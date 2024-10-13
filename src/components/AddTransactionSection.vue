@@ -15,15 +15,12 @@ const onSubmit = () => {
     toast.error('Both fields must be filled')
     return
   }
-
   transactions?.push({
     id: self.crypto.randomUUID(),
     description: description.value,
     amount: +amount.value
   })
-
   toast.success('Transaction added')
-
   description.value = ''
   amount.value = ''
 }

@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { useToast } from 'vue-toastification'
+import { TRANSACTIONS_KEY } from '@/types/InjectionKeys'
+
+const transactions = inject(TRANSACTIONS_KEY)
 
 const description = ref('')
 const amount = ref('')
@@ -9,9 +12,17 @@ const toast = useToast()
 
 const onSubmit = () => {
   if (!description.value || !amount.value) {
-    toast.error('Both fields must be filled!')
+    toast.error('Both fields must be filled')
     return
   }
+
+  transactions?.push({
+    id: self.crypto.randomUUID(),
+    description: description.value,
+    amount: +amount.value
+  })
+
+  toast.success('Transaction added')
 
   description.value = ''
   amount.value = ''
@@ -51,6 +62,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type='number'] {
+  appearance: none;
   -moz-appearance: textfield;
 }
 </style>

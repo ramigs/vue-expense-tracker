@@ -1,21 +1,56 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useToast } from 'vue-toastification'
+
+const description = ref('')
+const amount = ref('')
+
+const toast = useToast()
+
+const onSubmit = () => {
+  if (!description.value || !amount.value) {
+    toast.error('Both fields must be filled!')
+    return
+  }
+
+  description.value = ''
+  amount.value = ''
+}
+</script>
 
 <template>
   <h3>Add new transaction</h3>
-  <form id="form">
+  <form id="form" @submit.prevent="onSubmit">
     <div class="form-control">
-      <label for="text">Text</label>
-      <input type="text" id="text" placeholder="Enter text..." />
+      <label for="description">Description</label>
+      <input
+        type="text"
+        id="description"
+        placeholder="Enter description..."
+        v-model="description"
+      />
     </div>
     <div class="form-control">
       <label for="amount"
         >Amount <br />
         (negative - expense, positive - income)</label
       >
-      <input type="number" id="amount" placeholder="Enter amount..." />
+      <input type="number" id="amount" placeholder="Enter amount..." v-model="amount" />
     </div>
     <button class="btn">Add transaction</button>
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>

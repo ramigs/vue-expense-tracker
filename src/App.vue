@@ -10,12 +10,12 @@ import { TRANSACTIONS_KEY } from './types/InjectionKeys'
 const transactions: Ref<Array<Transaction>> = ref([
   {
     id: self.crypto.randomUUID(),
-    text: 'Flower',
+    description: 'Flower',
     amount: -19.99
   },
   {
     id: self.crypto.randomUUID(),
-    text: 'Work',
+    description: 'Work',
     amount: 1000
   }
 ])
